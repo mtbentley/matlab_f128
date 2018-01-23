@@ -9,7 +9,7 @@ classdef float128
     %       https://gcc.gnu.org/onlinedocs/libquadmath/Math-Library-Routines.html)
     %       - Figure out why disp doesn't work as expected
     %       - Check for memory leaks in the C part
-    %       - Unit test
+    %       - Unit test (including minimal correctness checks)
     %       - Performance tests
     
     properties
