@@ -16,7 +16,7 @@ Usage
 ---
 You will need to call `float128.init()` before using any float128s.
 
-Make a float with `float128.make(number)`;
+Make a float with `float128.make(number)`.
 
 You can also make pi and e with `float128.pi()` and `float128.e()`.
 
@@ -29,7 +29,7 @@ called `f`).
 Display a high precision string representation with `disp(f)`.
 
 Make a float128 from a string with `float128.fromstr(s)`, ie
-`float128.fromstr('23.14069263277926900572908636794854738026610624260021199344')`
+`float128.fromstr('23.14069263277926900572908636794854738026610624260021199344')`  
 (that is also the result of `float128.e() .^ float128.pi()`).
 
 TODO
