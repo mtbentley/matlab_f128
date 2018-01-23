@@ -7,6 +7,12 @@ classdef float128
     end
     
     methods(Static)
+        function init()
+            if not(libisloaded('f128'))
+                [notFound, warnings] = loadlibrary('f128.so', 'f128.h');
+                assert(isempty(notFound), 'could not load f128 lib')
+            end
+        end
         function reload()
             if libisloaded('f128')
                 unloadlibrary('f128')
