@@ -1,6 +1,16 @@
 classdef float128
-    %FLOAT128 Summary of this class goes here
-    %   Detailed explanation goes here
+    %FLOAT128 128 bit floating point numbers
+    %   A class for 128 bit floating point numbers (aka quad floats)
+    %   Uses GCC's libquadmath. Nearly every function is simply a call
+    %   to a C function via calllib
+    %
+    %   TODO:
+    %       - Add more functions (see
+    %       https://gcc.gnu.org/onlinedocs/libquadmath/Math-Library-Routines.html)
+    %       - Figure out why disp doesn't work as expected
+    %       - Check for memory leaks in the C part
+    %       - Unit test
+    %       - Performance tests
     
     properties
         Value
