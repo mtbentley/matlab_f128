@@ -105,7 +105,6 @@ __float128 *make_pi() {
 
 char *disp(__float128 *a) {
     quadmath_snprintf(LAST_STR, sizeof(LAST_STR), "%+-#46.*Qe", 64, *a);
-    printf("%s\n", LAST_STR);
 
     return LAST_STR;
 }
