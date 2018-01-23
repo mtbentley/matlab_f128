@@ -1,6 +1,8 @@
 CFLAGS=-fPIC -Wall -Wextra -O3 -std=c11
 cc=gcc
 
+.PHONY: all clean
+
 all: f128.so
 
 f128.so: f128.c f128.h
