@@ -16,7 +16,7 @@ Usage
 ---
 You will need to call `float128.init()` before using any float128s.
 
-Make a float with `float128.make(number)`.
+Make a float with `float128.make(number)`, ie `float128.make(42.42)`.
 
 You can also make pi and e with `float128.pi()` and `float128.e()`.
 
