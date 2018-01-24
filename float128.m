@@ -7,7 +7,6 @@ classdef float128
     %   TODO:
     %       - Add more functions (see
     %       https://gcc.gnu.org/onlinedocs/libquadmath/Math-Library-Routines.html)
-    %       - Figure out why disp doesn't work as expected
     %       - Check for memory leaks in the C part
     %       - Unit test (including minimal correctness checks)
     %       - Performance tests
@@ -115,8 +114,14 @@ classdef float128
             d = calllib('f128', 'get', obj.Value);
         end
         
-        function c = disp(obj)
-            c = calllib('f128', 'disp', obj.Value);
+        function disp(obj)
+            [rows, cols] = size(obj);
+            for r = 1:rows
+                for c = 1:cols
+                    fprintf("    %s", calllib('f128', 'disp', obj(r,c).Value));
+                end
+                fprintf("\n");
+            end
         end
     end
     
