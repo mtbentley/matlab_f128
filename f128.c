@@ -24,8 +24,8 @@ __float128 *times(__float128 *a, __float128 *b) {
 }
 
 __float128 *uminus(__float128 *a) {
-    __float128 n_one = -1.0;
-    __float128 *n = times(a, &n_one);
+    __float128 *n = malloc(sizeof(__float128));
+    *n = *a * -1;
     return n;
 }
 
