@@ -33,11 +33,6 @@ classdef float128
             end
         end
         function obj = make(val)
-            if not(libisloaded('f128'))
-                [notFound, warnings] = loadlibrary('f128.so', 'f128.h');
-                assert(isempty(notFound), 'could not load f128 lib')
-            end
-            
             p = calllib('f128', 'make', val);
             obj = float128(p);
         end
