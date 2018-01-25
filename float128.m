@@ -48,6 +48,40 @@ classdef float128
             obj = float128(p);
         end
     end
+    methods(Access=private)
+        function ret = do_element_operation(obj1, obj2, method)
+            [rows, cols] = size(obj1);
+            for r = 1:rows
+                for c = 1:cols
+                    ret(r,c) = float128(calllib('f128', method, obj1(r,c).Value, obj2(r,c).Value));
+                end
+            end
+        end
+        function ret = do_bool_element_operation(obj1, obj2, method)
+            [rows, cols] = size(obj1);
+            for r = 1:rows
+                for c = 1:cols
+                    ret(r,c) = boolean(calllib('f128', method, obj1(r,c).Value, obj2(r,c).Value));
+                end
+            end
+        end
+        function ret = do_single_element_operation(obj, method)
+            [rows, cols] = size(obj);
+            for r = 1:rows
+                for c = 1:cols
+                    ret(r,c) = float128(calllib('f128', method, obj(r,c).Value));
+                end
+            end
+        end
+        function ret = do_noconvert_element_operation(obj, method)
+            [rows, cols] = size(obj);
+            for r = 1:rows
+                for c = 1:cols
+                    ret(r,c) = calllib('f128', method, obj(r,c).Value);
+                end
+            end
+        end
+    end
     methods
         function obj = float128(valp)
             obj.Value = valp;
@@ -57,61 +91,67 @@ classdef float128
         end
         
         function r = plus(obj1, obj2)
-            r = float128(calllib('f128', 'plus', obj1.Value, obj2.Value));
+            r = do_element_operation(obj1, obj2, 'plus');
         end
         function r = minus(obj1, obj2)
-            r = float128(calllib('f128', 'minus', obj1.Value, obj2.Value));
+            r = do_element_operation(obj1, obj2, 'minus');
         end
         function r = times(obj1, obj2)
-            r = float128(calllib('f128', 'times', obj1.Value, obj2.Value));
+            r = do_element_operation(obj1, obj2, 'times');
         end
         function r = uminus(obj)
-            r = float128(calllib('f128', 'uminus', obj.Value));
+            minus_one = float128.make(-1);
+            [rows, cols] = size(obj);
+            for r = 1:rows
+                for c = 1:cols
+                    obj2(r,c) = minus_one;
+                end
+            end
+            r = do_element_operation(obj, obj2, 'times');
         end
         function r = rdivide(obj1, obj2)
-            r = float128(calllib('f128', 'rdivide', obj1.Value, obj2.Value));
+            r = do_element_operation(obj1, obj2, 'rdivide');
         end
         function r = power(obj1, obj2)
-            r = float128(calllib('f128', 'power', obj1.Value, obj2.Value));
+            r = do_element_operation(obj1, obj2, 'power');
         end
-        
         function r = lt(obj1, obj2)
-            r = boolean(calllib('f128', 'lt', obj1.Value, obj2.Value));
+            r = do_bool_element_operation(obj1, obj2, 'lt');
         end
         function r = gt(obj1, obj2)
-            r = boolean(calllib('f128', 'gt', obj1.Value, obj2.Value));
+            r = do_bool_element_operation(obj1, obj2, 'gt');
         end
         function r = le(obj1, obj2)
-            r = boolean(calllib('f128', 'le', obj1.Value, obj2.Value));
+            r = do_bool_element_operation(obj1, obj2, 'le');
         end
         function r = ge(obj1, obj2)
-            r = boolean(calllib('f128', 'ge', obj1.Value, obj2.Value));
+            r = do_bool_element_operation(obj1, obj2, 'ge');
         end
         function r = ne(obj1, obj2)
-            r = boolean(calllib('f128', 'ne', obj1.Value, obj2.Value));
+            r = do_bool_element_operation(obj1, obj2, 'ne');
         end
         function r = eq(obj1, obj2)
-            r = boolean(calllib('f128', 'eq', obj1.Value, obj2.Value));
+            r = do_bool_element_operation(obj1, obj2, 'eq');
         end
         
         function r = sin(obj1)
-            r = float128(calllib('f128', 'fsin', obj1.Value));
+            r = do_single_element_operation(obj1, 'fsin');
         end
         function r = sqrt(obj)
-            r = float128(calllib('f128', 'fsqrt', obj.Value));
+            r = do_single_element_operation(obj1, 'fsqrt');
         end
         
         function d = double(obj)
-            d = calllib('f128', 'get', obj.Value);
+            d = do_noconvert_element_operation(obj, 'get');
         end
         function f = float(obj)
-            f = calllib('f128', 'gfloat', obj.Value);
+            f = do_noconvert_element_operation(obj, 'gloat');
         end
         function s = single(obj)
-            s = calllib('f128', 'gfloat', obj.Value);
+            s = do_noconvert_element_operation(obj, 'gloat');
         end
         function d = get(obj)
-            d = calllib('f128', 'get', obj.Value);
+            d = do_noconvert_element_operation(obj, 'get');
         end
         
         function disp(obj)
