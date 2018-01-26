@@ -138,7 +138,7 @@ classdef float128
             r = do_single_element_operation(obj1, 'fsin');
         end
         function r = sqrt(obj)
-            r = do_single_element_operation(obj1, 'fsqrt');
+            r = do_single_element_operation(obj, 'fsqrt');
         end
         
         function d = double(obj)
